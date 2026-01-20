@@ -28,21 +28,13 @@ describe("mergeLocation", () => {
 		// records is the student's answer
 		mergeLocation(records)
 
-		// recordsCopy is the standard answer
-		recordsCopy.forEach((record) => {
-			const { city, province, country } = record
-			delete record.city
-			delete record.province
-			delete record.country
-
-			if (!city || city === "etc") {
-				record.location = `${province}, ${country}`
-			} else {
-				record.location = `${city}, ${province}, ${country}`
-			}
+		const answer = recordsCopy.map((record) => {
+			const { city, province, country, ...rest } = record
+			const location = !city || city === "etc" ? `${province}, ${country}` : `${city}, ${province}, ${country}`
+			return { location, ...rest }
 		})
 
-		expect(records).toEqual(recordsCopy)
+		expect(records).toEqual(answer)
 	})
 })
 

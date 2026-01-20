@@ -12,10 +12,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "csv": "^6.3.6"
+    "csv": "^6.4.1"
   },
   "devDependencies": {
-    "@esinx/eslint-config": "^2.2.0",
+    "@esinx/eslint-config": "^2.2.1",
     "@esinx/prettier-config": "^2.0.0",
     "eslint": "^9.39.2",
     "prettier": "^3.1.1",
