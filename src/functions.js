@@ -23,6 +23,20 @@ export function mergeLocation(data) {
   // YOU SHOULD NOT INCLUDE AN INVALID CITY IN YOUR LOCATION
   // i.e. if the city is either empty or equals to 'etc', your location should just be "p, co"
 
+  data.forEach((record) => {
+    const {city, province, country} = record;
+
+    if (city && city !== 'etc') {
+      record.location = `${city}, ${province}, ${country}`;
+    } else {
+      record.location = `${province}, ${country}`;
+    }
+
+    delete record.city;
+    delete record.province;
+    delete record.country;
+  });
+
   return data;
 }
 
@@ -42,6 +56,29 @@ export function mostConfirmedCases(data) {
   // TODO: implement
   // SKIP RECORDS WHICH DO NOT HAVE AGE GROUP SPECIFIED (empty string)
   // YOU CAN ASSUME THAT THERE ARE NO TIES
+
+  const ageGroups = {};
+  var maxAgeValue = -1;
+  var maxAge = '';
+  
+  data.forEach((record) => {
+    const age = record.age;
+
+    if (age && age !== '') {
+      if(ageGroups[age]) {
+        ageGroups[age] = ageGroups[age] + 1;
+      } else {
+        ageGroups[age] = 1;
+      }
+
+      if (ageGroups[age] > maxAgeValue) {
+        maxAgeValue = ageGroups[age];
+        maxAge = age;
+      }
+    }
+  });
+
+  return maxAge;
 }
 
 /**
@@ -57,6 +94,7 @@ export function averageRecoveryTime(data) {
   // You should do the round down at the last step of computation, specifically use Math.floor
   // SKIP RECORDS WHICH DO NOT HAVE A RELEASED DATE (empty string)
   // YOU CAN USE THE BUILT-IN `Date` CONSTRUCTOR
+  
 }
 
 /**

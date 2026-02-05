@@ -5,9 +5,17 @@
  */
 
 // TODO: Import csv parsing and file reading modules
+import fs from 'node:fs';
+
+import { parse } from 'csv-parse';
 
 // TODO: import functions from `functions.js`
-
+import {
+    mergeLocation,
+    mostConfirmedCases,
+    averageRecoveryTime,
+    percentages,
+  } from './functions.js';
 // DATASET link: https://www.kaggle.com/kimjihoo/coronavirusdataset?select=PatientInfo.csv
 // (already included in the `data` folder)
 
@@ -16,3 +24,17 @@
 // check the `csv-parse` docs for usage examples! https://csv.js.org/parse/
 
 // TODO: call functions on parsed data
+var records = [];
+var maxAge = '';
+
+fs.createReadStream('./data/PatientInfo.csv')
+  .pipe(parse({ columns: true, skip_empty_lines: true }))
+  .on('data', (row) => {
+    records.push(row);
+  })
+  .on('end', () => {
+    records = mergeLocation(records);
+    maxAge = mostConfirmedCases(records);
+    console.log(maxAge);
+  });
+
