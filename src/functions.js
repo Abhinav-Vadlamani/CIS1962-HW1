@@ -94,8 +94,8 @@ export function averageRecoveryTime(data) {
   // SKIP RECORDS WHICH DO NOT HAVE A RELEASED DATE (empty string)
   // YOU CAN USE THE BUILT-IN `Date` CONSTRUCTOR
   
-  var totalDays = 0;
-  var totalPatients = 0;
+  let totalDays = 0;
+  let totalPatients = 0;
 
   data.forEach(({confirmed_date, released_date}) => {
     if (!released_date) {
