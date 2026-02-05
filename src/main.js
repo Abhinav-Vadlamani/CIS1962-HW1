@@ -24,10 +24,10 @@ import {
 // check the `csv-parse` docs for usage examples! https://csv.js.org/parse/
 
 // TODO: call functions on parsed data
-var records = [];
-var max_age = '';
-var average_recovery_time = 0;
-var percentagesDict = {}
+let records = [];
+let max_age = '';
+let average_recovery_time = 0;
+let percentagesDict = {}
 
 fs.createReadStream('./data/PatientInfo.csv')
   .pipe(parse({ columns: true, skip_empty_lines: true }))

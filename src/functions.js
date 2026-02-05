@@ -58,11 +58,10 @@ export function mostConfirmedCases(data) {
   // YOU CAN ASSUME THAT THERE ARE NO TIES
 
   const ageGroups = {};
-  var maxAgeValue = -1;
-  var maxAge = '';
+  let maxAgeValue = -1;
+  let maxAge = '';
   
-  data.forEach((record) => {
-    const age = record.age;
+  data.forEach(({age}) => {
 
     if (age && age !== '') {
       if(ageGroups[age]) {
@@ -132,34 +131,34 @@ export function averageRecoveryTime(data) {
 export function percentages(data) {
   // TODO: implement
   // SKIP ALL RECORDS THAT DO NOT HAVE SEX OR STATE SPECIFIED, ALL OTHER RECORDS ARE VALID
-  var totalMales = 0;
-  var totalFemales = 0;
-  var malesReleased = 0;
-  var femalesReleased = 0;
-  var malesDeceased = 0;
-  var femalesDeceased = 0;
-  var malesIsolated = 0;
-  var femalesIsolated = 0;
+  let totalMales = 0;
+  let totalFemales = 0;
+  let malesReleased = 0;
+  let femalesReleased = 0;
+  let malesDeceased = 0;
+  let femalesDeceased = 0;
+  let malesIsolated = 0;
+  let femalesIsolated = 0;
 
   data.forEach(({sex, state}) => {
     if (!sex || !state) {
       return;
     }
 
-    if (sex == 'male') {
+    if (sex === 'male') {
       totalMales += 1;
-      if (state == 'released') {
+      if (state === 'released') {
         malesReleased +=1;
-      } else if (state == 'deceased') {
+      } else if (state === 'deceased') {
         malesDeceased += 1;
       } else {
         malesIsolated += 1;
       }
     } else {
       totalFemales += 1;
-      if (state == 'released') {
+      if (state === 'released') {
         femalesReleased +=1;
-      } else if (state == 'deceased') {
+      } else if (state === 'deceased') {
         femalesDeceased += 1;
       } else {
         femalesIsolated += 1;
