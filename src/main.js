@@ -25,7 +25,9 @@ import {
 
 // TODO: call functions on parsed data
 var records = [];
-var maxAge = '';
+var max_age = '';
+var average_recovery_time = 0;
+var percentagesDict = {}
 
 fs.createReadStream('./data/PatientInfo.csv')
   .pipe(parse({ columns: true, skip_empty_lines: true }))
@@ -34,7 +36,16 @@ fs.createReadStream('./data/PatientInfo.csv')
   })
   .on('end', () => {
     records = mergeLocation(records);
-    maxAge = mostConfirmedCases(records);
-    console.log(maxAge);
-  });
 
+    max_age = mostConfirmedCases(records);
+    console.log(max_age);
+
+    average_recovery_time = averageRecoveryTime(records);
+    console.log(average_recovery_time);
+
+    percentagesDict = percentages(records);
+    console.log(percentagesDict);
+
+    // console.log(records[0]);
+    // console.log(records.length);
+  });

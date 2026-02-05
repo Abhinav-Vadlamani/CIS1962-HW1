@@ -95,6 +95,22 @@ export function averageRecoveryTime(data) {
   // SKIP RECORDS WHICH DO NOT HAVE A RELEASED DATE (empty string)
   // YOU CAN USE THE BUILT-IN `Date` CONSTRUCTOR
   
+  var totalDays = 0;
+  var totalPatients = 0;
+
+  data.forEach(({confirmed_date, released_date}) => {
+    if (!released_date) {
+      return;
+    }
+
+    const confirmedDate = new Date(confirmed_date);
+    const releasedDate = new Date(released_date);
+    
+    totalDays += (releasedDate - confirmedDate) / (1000 * 60 * 60 * 24);
+    totalPatients += 1;
+  });
+
+  return Math.floor(totalDays / totalPatients);
 }
 
 /**
@@ -116,4 +132,47 @@ export function averageRecoveryTime(data) {
 export function percentages(data) {
   // TODO: implement
   // SKIP ALL RECORDS THAT DO NOT HAVE SEX OR STATE SPECIFIED, ALL OTHER RECORDS ARE VALID
+  var totalMales = 0;
+  var totalFemales = 0;
+  var malesReleased = 0;
+  var femalesReleased = 0;
+  var malesDeceased = 0;
+  var femalesDeceased = 0;
+  var malesIsolated = 0;
+  var femalesIsolated = 0;
+
+  data.forEach(({sex, state}) => {
+    if (!sex || !state) {
+      return;
+    }
+
+    if (sex == 'male') {
+      totalMales += 1;
+      if (state == 'released') {
+        malesReleased +=1;
+      } else if (state == 'deceased') {
+        malesDeceased += 1;
+      } else {
+        malesIsolated += 1;
+      }
+    } else {
+      totalFemales += 1;
+      if (state == 'released') {
+        femalesReleased +=1;
+      } else if (state == 'deceased') {
+        femalesDeceased += 1;
+      } else {
+        femalesIsolated += 1;
+      }
+    }
+  });
+  
+  return {
+    male_released: Math.floor((malesReleased / totalMales) * 100),
+    female_released: Math.floor((femalesReleased / totalFemales) * 100),
+    male_isolated: Math.floor((malesIsolated / totalMales) * 100),
+    female_isolated: Math.floor((femalesIsolated / totalFemales) * 100),
+    male_deceased: Math.floor((malesDeceased / totalMales) * 100),
+    female_deceased: Math.floor((femalesDeceased / totalFemales) * 100),
+  }
 }
